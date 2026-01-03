@@ -59,6 +59,19 @@ const App = {
             this.showClearDataConfirm();
         });
 
+        // Google Drive buttons
+        document.getElementById('gdrive-connect').addEventListener('click', () => {
+            this.connectGoogleDrive();
+        });
+
+        document.getElementById('gdrive-disconnect').addEventListener('click', () => {
+            this.disconnectGoogleDrive();
+        });
+
+        document.getElementById('gdrive-backup-now').addEventListener('click', () => {
+            this.backupNow();
+        });
+
         // Confirm modal
         document.getElementById('confirm-cancel').addEventListener('click', () => {
             this.hideConfirmModal();
@@ -100,6 +113,9 @@ const App = {
         document.getElementById('app-screen').classList.remove('active');
         document.getElementById('analytics-screen').classList.remove('active');
         document.getElementById('settings-screen').classList.add('active');
+
+        // Update Google Drive status
+        this.updateGDriveUI();
     },
 
     // Hide settings screen
@@ -217,6 +233,72 @@ const App = {
     // Hide confirm modal
     hideConfirmModal() {
         document.getElementById('confirm-modal').classList.remove('active');
+    },
+
+    // Connect Google Drive
+    async connectGoogleDrive() {
+        try {
+            if (typeof GDrive === 'undefined') {
+                Utils.showToast('Google Drive not available');
+                return;
+            }
+
+            await GDrive.init();
+            await GDrive.signIn();
+            Utils.showToast('Connected to Google Drive');
+
+            // Trigger initial backup
+            this.backupNow();
+        } catch (error) {
+            console.error('Google Drive connect error:', error);
+            Utils.showToast('Failed to connect');
+        }
+    },
+
+    // Disconnect Google Drive
+    disconnectGoogleDrive() {
+        Utils.showConfirm(
+            'Disconnect Google Drive?',
+            'Auto-backup will be disabled. Your existing backup will remain in Drive.',
+            () => {
+                if (typeof GDrive !== 'undefined') {
+                    GDrive.signOut();
+                    Utils.showToast('Disconnected from Google Drive');
+                }
+            }
+        );
+    },
+
+    // Manual backup
+    async backupNow() {
+        if (typeof GDrive === 'undefined' || !localStorage.getItem('gdrive_connected')) {
+            Utils.showToast('Google Drive not connected');
+            return;
+        }
+
+        Utils.showToast('Backing up...');
+        const encryptedData = localStorage.getItem(Storage.KEYS.DATA);
+        if (encryptedData) {
+            const success = await GDrive.backup(encryptedData);
+            if (success) {
+                Utils.showToast('Backup complete');
+            } else {
+                Utils.showToast('Backup failed');
+            }
+        }
+    },
+
+    // Update Google Drive UI
+    updateGDriveUI() {
+        if (typeof GDrive !== 'undefined') {
+            GDrive.onSignInChange(localStorage.getItem('gdrive_connected') === 'true');
+
+            // Show backup now button if connected
+            const backupBtn = document.getElementById('gdrive-backup-now');
+            if (backupBtn) {
+                backupBtn.classList.toggle('hidden', localStorage.getItem('gdrive_connected') !== 'true');
+            }
+        }
     }
 };
 

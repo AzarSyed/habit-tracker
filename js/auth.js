@@ -53,6 +53,15 @@ const Auth = {
         document.getElementById('forgot-pin').addEventListener('click', () => {
             this.showForgotPINConfirm();
         });
+
+        // Welcome screen buttons
+        document.getElementById('welcome-fresh').addEventListener('click', () => {
+            this.showSetupScreen();
+        });
+
+        document.getElementById('welcome-restore').addEventListener('click', () => {
+            this.startRestore();
+        });
     },
 
     // Check initial auth state
@@ -60,8 +69,159 @@ const Auth = {
         if (Storage.isPINSetup()) {
             this.showLockScreen();
         } else {
-            this.showSetupScreen();
+            // Fresh install - show welcome screen
+            this.showWelcomeScreen();
         }
+    },
+
+    // Show welcome screen for fresh installs
+    showWelcomeScreen() {
+        document.getElementById('lock-screen').classList.remove('active');
+        document.getElementById('pin-setup-screen').classList.remove('active');
+        document.getElementById('app-screen').classList.remove('active');
+        document.getElementById('welcome-screen').classList.add('active');
+    },
+
+    // Start restore flow
+    async startRestore() {
+        try {
+            // Initialize Google Drive
+            if (typeof GDrive === 'undefined') {
+                Utils.showToast('Google Drive not available');
+                return;
+            }
+
+            await GDrive.init();
+
+            // Sign in to Google
+            Utils.showToast('Connecting to Google Drive...');
+            await GDrive.signIn();
+
+            // Check for backup
+            Utils.showToast('Checking for backup...');
+            const backupData = await GDrive.restore();
+
+            if (!backupData || !backupData.data) {
+                Utils.showToast('No backup found');
+                return;
+            }
+
+            // Show restore PIN screen
+            this.pendingRestoreData = backupData.data;
+            this.showRestorePINScreen();
+
+        } catch (error) {
+            console.error('Restore error:', error);
+            Utils.showToast('Failed to connect to Google Drive');
+        }
+    },
+
+    // Pending restore data
+    pendingRestoreData: null,
+    restorePIN: '',
+
+    // Show restore PIN entry screen
+    showRestorePINScreen() {
+        document.getElementById('welcome-screen').classList.remove('active');
+        document.getElementById('lock-screen').classList.add('active');
+        document.getElementById('forgot-pin').classList.add('hidden');
+        document.getElementById('lock-title').textContent = 'Enter Backup PIN';
+        document.getElementById('lock-subtitle').textContent = 'Enter the PIN used to create the backup';
+
+        // Show all 6 dots for restore
+        const dots = document.querySelectorAll('#lock-screen .pin-dot');
+        dots.forEach(dot => dot.classList.remove('hidden'));
+
+        this.isRestoreMode = true;
+        this.expectedPinLength = 6; // Allow up to 6 digits
+        this.currentPIN = '';
+        this.updatePINDisplay('lock-screen');
+    },
+
+    isRestoreMode: false,
+
+    // Attempt restore with entered PIN
+    attemptRestore() {
+        const pin = this.currentPIN;
+        const encryptedData = this.pendingRestoreData;
+
+        // Try to decrypt with entered PIN
+        const salt = this.extractSaltFromBackup(encryptedData);
+        if (!salt) {
+            // Backup doesn't have separate salt - try direct decrypt
+            const key = CryptoJS.PBKDF2(pin, 'habit-tracker-salt', {
+                keySize: 256 / 32,
+                iterations: 1000
+            }).toString();
+
+            try {
+                const decrypted = Storage.decrypt(encryptedData, key);
+                if (decrypted && decrypted.habits) {
+                    this.completeRestore(pin, decrypted);
+                    return;
+                }
+            } catch (e) {
+                // Decrypt failed
+            }
+        }
+
+        // Try with different key derivation
+        const key = CryptoJS.PBKDF2(pin, pin + 'habit', {
+            keySize: 256 / 32,
+            iterations: 1000
+        }).toString();
+
+        try {
+            const decrypted = Storage.decrypt(encryptedData, key);
+            if (decrypted && decrypted.habits) {
+                this.completeRestore(pin, decrypted);
+                return;
+            }
+        } catch (e) {
+            // Decrypt failed
+        }
+
+        // Failed
+        this.currentPIN = '';
+        this.updatePINDisplay('lock-screen');
+        this.showLockError('Incorrect PIN. Try again.');
+        this.shakePINDisplay('lock-screen');
+    },
+
+    extractSaltFromBackup(data) {
+        // The backup stores raw encrypted data, salt is in localStorage
+        return null;
+    },
+
+    // Complete the restore process
+    completeRestore(pin, data) {
+        // Save the PIN
+        this.savePinLength(pin.length);
+        this.expectedPinLength = pin.length;
+
+        // Setup storage with the PIN
+        const salt = Storage.generateSalt();
+        const pinHash = Storage.hashPIN(pin, salt);
+        const key = Storage.deriveKey(pin, salt);
+
+        localStorage.setItem(Storage.KEYS.SALT, salt);
+        localStorage.setItem(Storage.KEYS.PIN_HASH, pinHash);
+
+        // Encrypt and save the restored data
+        const encryptedData = Storage.encrypt(data, key);
+        localStorage.setItem(Storage.KEYS.DATA, encryptedData);
+
+        // Cache the key
+        Storage._cachedKey = key;
+        Storage._cachedData = data;
+
+        // Reset state
+        this.isRestoreMode = false;
+        this.pendingRestoreData = null;
+
+        // Show app
+        Utils.showToast('Data restored successfully!');
+        this.showApp();
     },
 
     // Show lock screen
@@ -190,6 +350,12 @@ const Auth = {
 
     // Attempt to unlock
     attemptUnlock() {
+        // Handle restore mode differently
+        if (this.isRestoreMode) {
+            this.attemptRestore();
+            return;
+        }
+
         if (Storage.verifyPIN(this.currentPIN)) {
             // Success
             this.failedAttempts = 0;

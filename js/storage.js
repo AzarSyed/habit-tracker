@@ -198,7 +198,31 @@ const Storage = {
         // Update cache
         this._cachedData = data;
 
+        // Trigger Google Drive backup if connected
+        this.triggerCloudBackup();
+
         return true;
+    },
+
+    // Trigger cloud backup (debounced)
+    _backupTimeout: null,
+    triggerCloudBackup() {
+        // Debounce to avoid too many backups
+        if (this._backupTimeout) {
+            clearTimeout(this._backupTimeout);
+        }
+
+        this._backupTimeout = setTimeout(async () => {
+            if (typeof GDrive !== 'undefined' && localStorage.getItem('gdrive_connected') === 'true') {
+                const encryptedData = localStorage.getItem(this.KEYS.DATA);
+                if (encryptedData) {
+                    const success = await GDrive.backup(encryptedData);
+                    if (success) {
+                        console.log('Auto-backup to Google Drive completed');
+                    }
+                }
+            }
+        }, 2000); // Wait 2 seconds after last change
     },
 
     // Export data

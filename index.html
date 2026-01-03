@@ -72,6 +72,44 @@
         </div>
     </div>
 
+    <!-- Welcome Screen (Fresh Install) -->
+    <div id="welcome-screen" class="screen">
+        <div class="welcome-container">
+            <div class="welcome-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h1>Welcome to Habit Tracker</h1>
+            <p class="subtitle">Track your daily habits securely</p>
+
+            <div class="welcome-options">
+                <button id="welcome-fresh" class="welcome-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <div>
+                        <span class="btn-title">Start Fresh</span>
+                        <span class="btn-desc">Create a new PIN and start tracking</span>
+                    </div>
+                </button>
+                <button id="welcome-restore" class="welcome-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 16 12 12 8 16"></polyline>
+                        <line x1="12" y1="12" x2="12" y2="21"></line>
+                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+                    </svg>
+                    <div>
+                        <span class="btn-title">Restore from Google Drive</span>
+                        <span class="btn-desc">Recover your existing habits and data</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- PIN Setup Screen -->
     <div id="pin-setup-screen" class="screen">
         <div class="lock-container">
@@ -351,7 +389,39 @@
             </div>
 
             <div class="settings-section">
-                <h3>Data</h3>
+                <h3>Cloud Backup</h3>
+                <div class="gdrive-section">
+                    <div class="gdrive-info">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22.54 6.42l-4.26 4.26a1 1 0 0 1-1.41 0l-4.26-4.26a1 1 0 0 1 0-1.41l4.26-4.26a1 1 0 0 1 1.41 0l4.26 4.26a1 1 0 0 1 0 1.41z"></path>
+                            <path d="M7.54 21.42l-4.26-4.26a1 1 0 0 1 0-1.41l4.26-4.26a1 1 0 0 1 1.41 0l4.26 4.26a1 1 0 0 1 0 1.41l-4.26 4.26a1 1 0 0 1-1.41 0z"></path>
+                            <path d="M16.54 21.42l-4.26-4.26a1 1 0 0 1 0-1.41l9.52-9.52"></path>
+                            <path d="M2.46 7.46l9.52 9.52"></path>
+                        </svg>
+                        <div>
+                            <span>Google Drive</span>
+                            <span id="gdrive-status" class="gdrive-status">Not connected</span>
+                        </div>
+                    </div>
+                    <button id="gdrive-connect" class="btn btn-primary btn-small">Connect</button>
+                    <button id="gdrive-disconnect" class="btn btn-secondary btn-small hidden">Disconnect</button>
+                </div>
+                <p id="gdrive-last-backup" class="gdrive-last-backup hidden">Last backup: Never</p>
+                <button id="gdrive-backup-now" class="settings-item hidden">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 16 12 12 8 16"></polyline>
+                        <line x1="12" y1="12" x2="12" y2="21"></line>
+                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+                    </svg>
+                    <span>Backup Now</span>
+                    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="settings-section">
+                <h3>Local Data</h3>
                 <button id="export-data" class="settings-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -453,9 +523,11 @@
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <!-- App Scripts -->
     <script src="js/storage.js"></script>
+    <script src="js/gdrive.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/habits.js"></script>
     <script src="js/views.js"></script>

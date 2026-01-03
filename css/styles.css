@@ -1062,3 +1062,138 @@ body {
     20%, 60% { transform: translateX(-10px); }
     40%, 80% { transform: translateX(10px); }
 }
+
+/* ==================== WELCOME SCREEN ==================== */
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+}
+
+.welcome-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.welcome-icon svg {
+    width: 40px;
+    height: 40px;
+    color: white;
+}
+
+.welcome-container h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-options {
+    width: 100%;
+    max-width: 320px;
+    margin-top: 2rem;
+}
+
+.welcome-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text-primary);
+    transition: all 0.2s;
+}
+
+.welcome-btn:active {
+    transform: scale(0.98);
+    background: var(--bg-secondary);
+}
+
+.welcome-btn svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--accent);
+}
+
+.welcome-btn .btn-title {
+    display: block;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.welcome-btn .btn-desc {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* ==================== GOOGLE DRIVE SETTINGS ==================== */
+.gdrive-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+}
+
+.gdrive-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.gdrive-info svg {
+    width: 24px;
+    height: 24px;
+    color: var(--accent);
+}
+
+.gdrive-info > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.gdrive-info > div > span:first-child {
+    font-weight: 500;
+}
+
+.gdrive-status {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.gdrive-status.connected {
+    color: var(--success);
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    flex: none;
+}
+
+.gdrive-last-backup {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding: 0.5rem;
+    text-align: center;
+}
