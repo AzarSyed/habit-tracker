@@ -2,7 +2,7 @@
  * Service Worker - Enables offline functionality
  */
 
-const CACHE_NAME = 'habit-tracker-v5';
+const CACHE_NAME = 'habit-tracker-v6';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',

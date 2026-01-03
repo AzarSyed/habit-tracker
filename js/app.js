@@ -72,6 +72,10 @@ const App = {
             this.backupNow();
         });
 
+        document.getElementById('gdrive-sync-from-cloud').addEventListener('click', () => {
+            this.syncFromCloud();
+        });
+
         // Confirm modal
         document.getElementById('confirm-cancel').addEventListener('click', () => {
             this.hideConfirmModal();
@@ -288,15 +292,81 @@ const App = {
         }
     },
 
+    // Sync from cloud - download and replace local data
+    async syncFromCloud() {
+        if (typeof GDrive === 'undefined' || !localStorage.getItem('gdrive_connected')) {
+            Utils.showToast('Google Drive not connected');
+            return;
+        }
+
+        Utils.showConfirm(
+            'Sync from Cloud?',
+            'This will replace your local data with the cloud backup. Any local changes not backed up will be lost.',
+            async () => {
+                Utils.showToast('Downloading from cloud...');
+
+                try {
+                    const backupData = await GDrive.restore();
+
+                    if (!backupData || !backupData.data) {
+                        Utils.showToast('No backup found in cloud');
+                        return;
+                    }
+
+                    // The backup data is encrypted - we need to decrypt with current key
+                    const encryptedData = backupData.data;
+
+                    // Try to decrypt with current cached key
+                    if (Storage._cachedKey) {
+                        try {
+                            const decrypted = Storage.decrypt(encryptedData, Storage._cachedKey);
+                            if (decrypted && decrypted.habits) {
+                                // Save decrypted data back (re-encrypted with current key)
+                                Storage._cachedData = decrypted;
+                                const reEncrypted = Storage.encrypt(decrypted, Storage._cachedKey);
+                                localStorage.setItem(Storage.KEYS.DATA, reEncrypted);
+
+                                // Refresh views
+                                Views.render();
+                                if (this.chartsInitialized) {
+                                    Charts.updateHabitFilter();
+                                    Charts.refresh();
+                                }
+
+                                Utils.showToast('Synced from cloud successfully!');
+                                return;
+                            }
+                        } catch (e) {
+                            console.error('Decrypt with current key failed:', e);
+                        }
+                    }
+
+                    // If current key doesn't work, the backup was made with different PIN
+                    Utils.showToast('Backup PIN differs from current PIN. Clear data and restore from welcome screen.');
+
+                } catch (error) {
+                    console.error('Sync from cloud error:', error);
+                    Utils.showToast('Sync failed');
+                }
+            }
+        );
+    },
+
     // Update Google Drive UI
     updateGDriveUI() {
         if (typeof GDrive !== 'undefined') {
             GDrive.onSignInChange(localStorage.getItem('gdrive_connected') === 'true');
 
-            // Show backup now button if connected
+            // Show backup/sync buttons if connected
+            const isConnected = localStorage.getItem('gdrive_connected') === 'true';
             const backupBtn = document.getElementById('gdrive-backup-now');
+            const syncBtn = document.getElementById('gdrive-sync-from-cloud');
+
             if (backupBtn) {
-                backupBtn.classList.toggle('hidden', localStorage.getItem('gdrive_connected') !== 'true');
+                backupBtn.classList.toggle('hidden', !isConnected);
+            }
+            if (syncBtn) {
+                syncBtn.classList.toggle('hidden', !isConnected);
             }
         }
     }
