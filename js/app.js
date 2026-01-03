@@ -88,6 +88,8 @@ const App = {
 
         // Initialize charts when analytics tab is first shown
         this.chartsInitialized = false;
+        // Initialize workouts when tab is first shown
+        this.workoutsInitialized = false;
     },
 
     // Switch between tabs
@@ -101,6 +103,7 @@ const App = {
 
         // Show/hide screens
         document.getElementById('app-screen').classList.toggle('active', tab === 'home');
+        document.getElementById('workout-screen').classList.toggle('active', tab === 'workouts');
         document.getElementById('analytics-screen').classList.toggle('active', tab === 'analytics');
 
         // Initialize charts on first view
@@ -109,6 +112,16 @@ const App = {
             this.chartsInitialized = true;
         } else if (tab === 'analytics') {
             Charts.refresh();
+        }
+
+        // Initialize workouts on first view
+        if (tab === 'workouts') {
+            if (!this.workoutsInitialized) {
+                WorkoutViews.init();
+                this.workoutsInitialized = true;
+            } else {
+                WorkoutViews.render();
+            }
         }
     },
 

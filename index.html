@@ -254,6 +254,13 @@
                 </svg>
                 <span>Home</span>
             </button>
+            <button class="nav-item" data-tab="workouts">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6.5 6.5h11v11h-11z"></path>
+                    <path d="M6.5 2v4.5M17.5 2v4.5M6.5 17.5V22M17.5 17.5V22M2 6.5h4.5M2 17.5h4.5M17.5 6.5H22M17.5 17.5H22"></path>
+                </svg>
+                <span>Workouts</span>
+            </button>
             <button class="nav-item" data-tab="analytics">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -350,7 +357,117 @@
                 </svg>
                 <span>Home</span>
             </button>
+            <button class="nav-item" data-tab="workouts">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6.5 6.5h11v11h-11z"></path>
+                    <path d="M6.5 2v4.5M17.5 2v4.5M6.5 17.5V22M17.5 17.5V22M2 6.5h4.5M2 17.5h4.5M17.5 6.5H22M17.5 17.5H22"></path>
+                </svg>
+                <span>Workouts</span>
+            </button>
             <button class="nav-item active" data-tab="analytics">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+                <span>Analytics</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Workout Screen -->
+    <div id="workout-screen" class="screen">
+        <header class="app-header">
+            <h1>Workouts</h1>
+            <div class="header-actions">
+                <button id="workout-view-toggle" class="icon-button" title="Toggle View">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                </button>
+                <button id="workout-settings-btn" class="icon-button" title="Settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Date Navigation -->
+        <div class="date-display">
+            <button id="workout-prev-day" class="nav-button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <span id="workout-current-date">Today</span>
+            <button id="workout-next-day" class="nav-button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+            <button id="workout-today-btn" class="btn btn-small btn-secondary hidden">Today</button>
+        </div>
+
+        <!-- Daily View -->
+        <div id="workout-daily-view" class="view active">
+            <div id="workout-exercises-list" class="exercises-list">
+                <!-- Exercise cards rendered here -->
+            </div>
+
+            <div id="workout-empty-state" class="empty-state hidden">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M6.5 6.5h11v11h-11z"></path>
+                    <path d="M6.5 2v4.5M17.5 2v4.5M6.5 17.5V22M17.5 17.5V22"></path>
+                </svg>
+                <p>No exercises yet</p>
+                <span>Tap + to add your first exercise</span>
+            </div>
+
+            <h3 id="workout-log-title" class="section-title">Today's Log</h3>
+            <div id="workout-log-entries" class="log-entries">
+                <!-- Log entries rendered here -->
+            </div>
+        </div>
+
+        <!-- History View -->
+        <div id="workout-history-view" class="view">
+            <div class="history-filter">
+                <select id="exercise-history-filter" class="exercise-filter">
+                    <option value="">All Exercises</option>
+                </select>
+            </div>
+            <div id="workout-history-content" class="history-content">
+                <!-- History content rendered here -->
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <button id="add-exercise-btn" class="fab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </button>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item" data-tab="home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Home</span>
+            </button>
+            <button class="nav-item active" data-tab="workouts">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6.5 6.5h11v11h-11z"></path>
+                    <path d="M6.5 2v4.5M17.5 2v4.5M6.5 17.5V22M17.5 17.5V22M2 6.5h4.5M2 17.5h4.5M17.5 6.5H22M17.5 17.5H22"></path>
+                </svg>
+                <span>Workouts</span>
+            </button>
+            <button class="nav-item" data-tab="analytics">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="18" y1="20" x2="18" y2="10"></line>
                     <line x1="12" y1="20" x2="12" y2="4"></line>
@@ -526,6 +643,134 @@
         </div>
     </div>
 
+    <!-- Add/Edit Exercise Modal -->
+    <div id="exercise-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="exercise-modal-title">Add Exercise</h2>
+                <button id="exercise-modal-close" class="icon-button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form id="exercise-form">
+                <div class="form-group">
+                    <label for="exercise-name">Exercise Name</label>
+                    <input type="text" id="exercise-name" placeholder="e.g., Pull-ups" required maxlength="50">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="exercise-type">Type</label>
+                        <select id="exercise-type">
+                            <option value="strength">Strength</option>
+                            <option value="cardio">Cardio</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exercise-unit">Unit</label>
+                        <select id="exercise-unit">
+                            <option value="reps">Reps</option>
+                            <option value="jumps">Jumps</option>
+                            <option value="steps">Steps</option>
+                            <option value="minutes">Minutes</option>
+                            <option value="km">Kilometers</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label>
+                        <input type="checkbox" id="exercise-track-weight">
+                        Track weight (kg)
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label>
+                        <input type="checkbox" id="exercise-track-duration">
+                        Track duration (minutes)
+                    </label>
+                </div>
+
+                <div class="form-section">
+                    <h4>Goal (Optional)</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="exercise-goal-type">Period</label>
+                            <select id="exercise-goal-type">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exercise-goal-target">Target</label>
+                            <input type="number" id="exercise-goal-target" min="0" value="0" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="delete-exercise" class="btn btn-danger hidden">Delete</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Log Workout Modal -->
+    <div id="log-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="log-modal-title">Log Workout</h2>
+                <button id="log-modal-close" class="icon-button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form id="log-form">
+                <div class="form-section">
+                    <h4>Sets</h4>
+                    <div id="log-sets-container">
+                        <!-- Set rows added dynamically -->
+                    </div>
+                    <button type="button" id="add-set-btn" class="btn btn-secondary btn-small">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Set
+                    </button>
+                </div>
+
+                <div class="form-group" id="log-duration-group">
+                    <label for="log-duration">Duration (minutes)</label>
+                    <input type="number" id="log-duration" min="0" placeholder="Optional">
+                </div>
+
+                <div class="form-group" id="log-distance-group">
+                    <label for="log-distance">Steps/Distance</label>
+                    <input type="number" id="log-distance" min="0" placeholder="Optional">
+                </div>
+
+                <div class="form-group">
+                    <label for="log-notes">Notes (optional)</label>
+                    <input type="text" id="log-notes" placeholder="Any notes about this workout" maxlength="200">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Log</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">
         <span id="toast-message"></span>
@@ -543,6 +788,8 @@
     <script src="js/habits.js"></script>
     <script src="js/views.js"></script>
     <script src="js/charts.js"></script>
+    <script src="js/workouts.js"></script>
+    <script src="js/workout-views.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

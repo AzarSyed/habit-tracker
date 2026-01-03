@@ -1197,3 +1197,769 @@ body {
     padding: 0.5rem;
     text-align: center;
 }
+
+/* ==================== WORKOUT SCREEN ==================== */
+.workout-content {
+    padding-bottom: 140px;
+}
+
+/* Workout Header */
+.workout-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.workout-header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* View Toggle */
+.view-toggle {
+    display: flex;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    padding: 2px;
+}
+
+.view-toggle button {
+    padding: 0.5rem 0.75rem;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.view-toggle button.active {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px var(--shadow);
+}
+
+/* Exercise Filter */
+.exercise-filter {
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    min-width: 120px;
+}
+
+/* Date Navigation */
+.date-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.date-nav-center {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.date-nav-center span {
+    font-weight: 600;
+    font-size: 0.95rem;
+    min-width: 140px;
+    text-align: center;
+}
+
+.today-btn {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-primary);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.today-btn:active {
+    background: var(--bg-tertiary);
+}
+
+/* Exercises List */
+.exercises-list {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.exercise-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: transform 0.2s;
+}
+
+.exercise-card:active {
+    transform: scale(0.98);
+}
+
+.exercise-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.exercise-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.exercise-name {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.exercise-type {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.exercise-type.strength {
+    background: rgba(255, 149, 0, 0.15);
+    color: var(--warning);
+}
+
+.exercise-type.cardio {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--success);
+}
+
+.exercise-type.custom {
+    background: rgba(0, 122, 255, 0.15);
+    color: var(--accent);
+}
+
+.exercise-edit {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.exercise-edit svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Exercise Stats */
+.exercise-stats {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.exercise-stats .today-total {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.exercise-stats .pr-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--warning);
+    font-weight: 600;
+}
+
+.exercise-stats .pr-indicator svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Mini Progress Bar */
+.mini-progress {
+    height: 4px;
+    background: var(--bg-tertiary);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.mini-progress .fill {
+    height: 100%;
+    background: var(--success);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.goal-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+}
+
+/* Exercise Actions */
+.exercise-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.exercise-actions button {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    transition: all 0.2s;
+}
+
+.exercise-actions button:active {
+    background: var(--bg-tertiary);
+}
+
+.exercise-actions button svg {
+    width: 14px;
+    height: 14px;
+}
+
+.exercise-actions .log-btn {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+.exercise-actions .log-btn:active {
+    background: var(--accent-hover);
+}
+
+/* Day Logs Section */
+.day-logs-section {
+    padding: 0 1rem 1rem;
+}
+
+.section-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+    padding-left: 0.25rem;
+}
+
+.day-logs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.log-entry {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.875rem;
+    position: relative;
+}
+
+.log-entry.is-pr {
+    border-color: var(--warning);
+    background: rgba(255, 149, 0, 0.05);
+}
+
+.log-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.log-exercise-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.log-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.log-details {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.35rem;
+}
+
+.log-total {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.log-notes {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.35rem;
+}
+
+.log-actions {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    gap: 0.25rem;
+}
+
+.log-actions button {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.log-actions button:active {
+    background: var(--bg-tertiary);
+}
+
+.log-actions button svg {
+    width: 14px;
+    height: 14px;
+}
+
+.log-actions .delete-btn:active {
+    color: var(--danger);
+}
+
+/* PR Badge */
+.pr-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.15rem 0.4rem;
+    background: var(--warning);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.pr-badge svg {
+    width: 10px;
+    height: 10px;
+}
+
+/* No Logs Empty State */
+.no-logs {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* ==================== HISTORY VIEW ==================== */
+.history-content {
+    padding: 1rem;
+    padding-bottom: 140px;
+}
+
+.history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.history-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* History Stats Cards */
+.history-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.history-stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.history-stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+}
+
+.history-stat-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* PR Cards */
+.pr-section {
+    margin-bottom: 1.5rem;
+}
+
+.pr-section h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.pr-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.pr-card {
+    background: var(--card-bg);
+    border: 1px solid var(--warning);
+    border-radius: 10px;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.pr-card-value {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--warning);
+    margin-bottom: 0.15rem;
+}
+
+.pr-card-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.pr-card-date {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* History Log List */
+.history-logs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.history-log-date {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+}
+
+/* All Exercises Summary */
+.exercises-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.summary-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.summary-card:active {
+    transform: scale(0.98);
+    background: var(--bg-secondary);
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.summary-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.summary-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.summary-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.summary-stat strong {
+    color: var(--text-primary);
+}
+
+/* ==================== LOG MODAL ==================== */
+.sets-container {
+    margin-bottom: 1rem;
+}
+
+.sets-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.sets-header label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.add-set-btn {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.add-set-btn svg {
+    width: 12px;
+    height: 12px;
+}
+
+.sets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.set-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+}
+
+.set-number {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 45px;
+}
+
+.set-row input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.set-row input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.set-row .input-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    min-width: 35px;
+}
+
+.remove-set-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-set-btn:active {
+    color: var(--danger);
+    background: rgba(255, 59, 48, 0.1);
+}
+
+.remove-set-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Optional Fields in Log Modal */
+.optional-fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.optional-fields .form-group {
+    margin-bottom: 0;
+}
+
+.optional-fields input {
+    padding: 0.75rem;
+}
+
+/* Form Group for Selects */
+.form-group select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+/* Checkbox Group */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+}
+
+.checkbox-item label {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+/* Goal Settings in Exercise Modal */
+.goal-settings {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.goal-settings .form-group {
+    margin-bottom: 0;
+}
+
+/* Delete Button in Modal */
+.delete-exercise-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border: 1px solid var(--danger);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--danger);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.delete-exercise-btn:active {
+    background: rgba(255, 59, 48, 0.1);
+}
+
+/* Total Count Field (for cardio) */
+.total-count-field {
+    margin-bottom: 1rem;
+}
+
+.total-count-field input {
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+}

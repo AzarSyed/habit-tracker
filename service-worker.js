@@ -2,7 +2,7 @@
  * Service Worker - Enables offline functionality
  */
 
-const CACHE_NAME = 'habit-tracker-v6';
+const CACHE_NAME = 'habit-tracker-v7';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -14,6 +14,8 @@ const ASSETS_TO_CACHE = [
     './js/views.js',
     './js/charts.js',
     './js/gdrive.js',
+    './js/workouts.js',
+    './js/workout-views.js',
     './manifest.json',
     './icons/icon.svg',
     'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js',
