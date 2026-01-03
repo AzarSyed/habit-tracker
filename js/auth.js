@@ -248,6 +248,7 @@ const Auth = {
 
     // Show setup screen
     showSetupScreen() {
+        document.getElementById('welcome-screen').classList.remove('active');
         document.getElementById('lock-screen').classList.remove('active');
         document.getElementById('pin-setup-screen').classList.add('active');
         document.getElementById('app-screen').classList.remove('active');
@@ -256,6 +257,7 @@ const Auth = {
 
     // Show main app
     showApp() {
+        document.getElementById('welcome-screen').classList.remove('active');
         document.getElementById('lock-screen').classList.remove('active');
         document.getElementById('pin-setup-screen').classList.remove('active');
         document.getElementById('app-screen').classList.add('active');
